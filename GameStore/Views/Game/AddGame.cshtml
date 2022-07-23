@@ -1,0 +1,86 @@
+﻿@using GameStore.Models
+@{
+	ViewData["Title"] = "Add Game";
+}
+@model Category
+
+<div class="container">
+	<form class="row g-3 needs-validation mt-3" method="post" asp-action="AddGame" novalidate>
+		<div class="col-md-4">
+			<label for="GameNameValidation" class="form-label">Game Name</label>
+			<input type="text" class="form-control" id="GameNameValidation" name="GameName" required>
+			<div class="valid-feedback">
+				Looks good!
+			</div>
+		</div>
+		<div class="col-md-4">
+			<label for="PriceValidation" class="form-label">Price</label>
+			<input type="text" class="form-control" id="PriceValidation" name="GamePrice" required>
+			<div class="invalid-feedback">
+				Please provide a valid Price.
+			</div>
+		</div>
+		<div class="input-group col-md-8">
+			<span class="input-group-text">Game Description</span>
+			<textarea class="form-control" aria-label="Game Description" name="GameDescription"></textarea>
+		</div>
+		<div class="col-md-4">
+			<label for="PublisherValidation" class="form-label">Game Publisher</label>
+			<input type="text" class="form-control" id="PublisherValidation" name="GamePublisher" required>
+			<div class="invalid-feedback">
+				Please provide a valid Publisher.
+			</div>
+		</div>
+		<div class="col-md-4">
+			<label for="DeveloperValidation" class="form-label">Game Developer</label>
+			<input type="text" class="form-control" id="DeveloperValidation" name="GameDeveloper" required>
+			<div class="invalid-feedback">
+				Please provide a valid Developer.
+			</div>
+		</div>
+		<div class="col-md-4">
+			<label for="CategoryValidation" class="form-label">Category</label>
+			<select class="form-select" id="CategoryValidation" name="GameCategoryID" required>
+				@foreach (var item in ViewBag.Categories)
+				{
+					<option value="@item.CategoryId">@item.CategoryName</option>
+				}
+			</select>
+			<div class="invalid-feedback">
+				Please select a valid Category.
+			</div>
+		</div>
+
+		<!--
+		<div class="mb-3">
+			<label for="formFile" class="form-label">Import Cover Image</label>
+			<input class="form-control" type="file" id="formFile" name="GameCoverImagePath" required>
+			<div class="invalid-feedback">
+				Please select an Image.
+			</div>
+		</div>
+		<div class="mb-3">
+			<label for="formFileMultiple" class="form-label">Import Game Content Images</label>
+			<input class="form-control" type="file" id="formFileMultiple" multiple required>
+			<div class="invalid-feedback">
+				Please select an Image.
+			</div>
+		</div>
+		-->
+
+		<div class="col-12">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+				<label class="form-check-label" for="invalidCheck">
+					Agree to terms and conditions
+				</label>
+				<div class="invalid-feedback">
+					You must agree before submitting.
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<button class="btn btn-primary mb-3" type="submit" style="float:right">Release Game</button>
+		</div>
+	</form>
+</div>

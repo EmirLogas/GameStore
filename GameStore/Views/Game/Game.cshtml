@@ -1,0 +1,12 @@
+﻿@using GameStore.Models
+@model Game
+@{
+	ViewBag.Title = @Model.GameName;
+}
+
+<div class="container">
+	<h1>@Model.GameName</h1>
+	<h2>@Model.GamePrice</h2>
+	<p>@Model.GameDescription</p>
+
+</div>

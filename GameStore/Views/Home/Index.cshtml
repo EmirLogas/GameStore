@@ -1,0 +1,31 @@
+﻿@using GameStore.Models
+@{
+	ViewData["Title"] = "Home Page";
+}
+@model List<Game>
+
+
+<div class="container">
+	<h1>
+		Games
+	</h1>
+
+	<div class="row">
+		@foreach (var item in Model)
+		{
+			<div class="col-md-6 col-lg-4 mb-3">
+				<div class="card">
+					<a href="/Game/@item.GameId" style="text-decoration:none; color:black">
+						<img src="" class="card-img-top" alt="">
+						<div class="card-body">
+							<h5 class="card-title text-center">@item.GameName</h5>
+							<p class="card-subtitle">@item.GamePrice.ToString("0.00")$</p>
+							<p class="card-text">@item.GameDescription</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		}
+	</div>
+
+</div>
