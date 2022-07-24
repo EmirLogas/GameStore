@@ -1,22 +1,41 @@
 ﻿@{
-	ViewData["Title"] = "My Games";
+	ViewData["Title"] = "Released Games";
 }
 @model List<Game>
 
-<div class="container mt-2">
-	<a asp-action="AddGame" type="button" class="btn btn-primary mt-3 mb-3" style="float:right">Release New Game</a>
-	<table class="table table-primary table-hover table-bordered">
-		<thead class="table-dark">
-			<tr>
-				<th scope="col">#</th>
-				<th scope="col">Game Name</th>
-				<th scope="col">Price</th>
-				<th scope="col">Category</th>
-				<th scope="col">Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			@{
+@section Body{
+	<div class="modal" id="DelGameModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Delete Game</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modalQues"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+					<button type="button" id="delGameBtn" class="btn btn-primary">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+	<div class="container mt-2">
+		<a asp-action="AddGame" type="button" class="btn btn-primary mt-3 mb-3" style="float:right">Release New Game</a>
+		<table class="table table-primary table-hover table-bordered align-middle">
+			<thead class="table-dark">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Game Name</th>
+					<th scope="col">Price</th>
+					<th scope="col">Category</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
 				int tCounter = 1;
 			}
 			@foreach (var item in Model)
@@ -30,16 +49,44 @@
 					<td>@item.GamePrice.ToString("0.00")$</td>
 					<td>@item.GameCategory.CategoryName</td>
 					<td>
-						<a href="" style="text-decoration:none">
-							<span class="material-icons">settings</span>
-						</a>
+						<button type="button" class="btn btn-info editGameBtn">
+							Edit
+						</button>
 
-						<a href="" style="text-decoration:none">
-							<span class="material-icons">delete</span>
-						</a>
+						<button type="button" class="btn btn-primary openGameModalBtn" data-gameid="@item.GameId" data-gamename="@item.GameName" data-bs-toggle="modal" data-bs-target="#DelGameModal">
+							Delete
+						</button>
 					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
+
+@section Scripts{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script>
+		$(".openGameModalBtn").click(function() {
+			var gameName = $(this).data("gamename");
+			$("#modalQues").html("Are you sure you want to delete " + gameName + "?");
+			var gameID = $(this).data("gameid");
+			$("#delGameBtn").data("gameidtemp", gameID);
+		});
+
+		$("#delGameBtn").click(function() {
+			var gameID = $(this).data("gameidtemp");
+			$.ajax({
+				url: "/DeleteGame/" + gameID,
+				type: "POST",
+				success: function(result) {
+					if (result == "success") {
+						window.location.reload();
+					}
+					else {
+						alert("Error deleting game");
+					}
+				},
+			});
+		});
+	</script>
+}

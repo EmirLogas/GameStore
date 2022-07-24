@@ -30,8 +30,24 @@ namespace GameStore.Controllers
         }
         public IActionResult Game(int id)
         {
-            Game game = db.Games.FirstOrDefault(x => x.GameId == id);
+            Game game = db.Games.First(x => x.GameId == id);
             return View(game);
+        }
+        
+        [HttpPost]
+        public string DeleteGame(int id)
+        {
+            try
+            {
+                Game game = db.Games.First(x => x.GameId == id);
+                db.Games.Remove(game);
+                db.SaveChanges();
+                return "success";
+            }
+            catch (Exception)
+            {
+                return "fail";
+            }
         }
     }
 }
