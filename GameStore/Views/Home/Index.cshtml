@@ -6,6 +6,15 @@
 
 
 <div class="container">
+
+	@if (@ViewBag.UserName != null)
+	{
+		<h1>
+			Welcome @ViewBag.UserName
+			Welcome @ViewBag.Email
+		</h1>
+	}
+
 	<h1>
 		Games
 	</h1>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using GameStore.Models;
+using System.Security.Claims;
 
 namespace GameStore.Controllers
 {
@@ -19,6 +20,9 @@ namespace GameStore.Controllers
         public IActionResult Index()
         {
             List<Game> games = db.Games.ToList();
+
+            ViewBag.UserName = this.User.FindFirstValue(ClaimTypes.Name);
+            ViewBag.Email = this.User.FindFirstValue(ClaimTypes.Email);
             
             return View(games);
         }

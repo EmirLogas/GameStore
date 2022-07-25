@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GameStore.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameStore.Controllers
 {
@@ -12,6 +13,7 @@ namespace GameStore.Controllers
             ViewBag.Categories = db.Categories.ToList();
             return View(games);
         }
+        [Authorize]
         public IActionResult AddGame()
         {
             ViewBag.Categories = db.Categories.ToList();
