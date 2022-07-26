@@ -1,7 +1,6 @@
 ﻿using GameStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using GameStore.Models;
 using System.Security.Claims;
 
 namespace GameStore.Controllers

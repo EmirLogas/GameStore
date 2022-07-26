@@ -27,12 +27,12 @@ namespace GameStore.Controllers
         [HttpPost]
         public IActionResult AddGame(Game game, IFormFile formFile, List<IFormFile> formFiles)
         {
-            User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
-            game.User = user;
+            game.User = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
             game.GameCoverImagePath = UploadFile(formFile);
-            //game.GameContentImage = UploadFiles(formFiles);
+
             db.Games.Add(game);
             db.SaveChanges();
+            UploadFiles(formFiles, game);
 
             return RedirectToAction("ListGame");
         }
@@ -42,6 +42,8 @@ namespace GameStore.Controllers
             return View(game);
         }
 
+
+
         [Authorize]
         [HttpPost]
         public string DeleteGame(int id)
@@ -49,6 +51,24 @@ namespace GameStore.Controllers
             try
             {
                 Game game = db.Games.First(x => x.GameId == id);
+                FileInfo GameCoverImageFile = new FileInfo(@"wwwroot\" + game.GameCoverImagePath);
+                if (GameCoverImageFile.Exists)//check file exsit or not  
+                {
+                    GameCoverImageFile.Delete();
+                }
+
+                IQueryable<ContentImage> contentImages = db.ContentImages.Where(x => x.GameId == id);
+
+                foreach (ContentImage contentImage in contentImages)
+                {
+                    string path = @"wwwroot\" + contentImage.ContentImagePath;
+                    FileInfo ContentImageFile = new FileInfo(path);
+                    if (ContentImageFile.Exists)//check file exsit or not  
+                    {
+                        ContentImageFile.Delete();
+                    }
+                    db.ContentImages.Remove(contentImage);
+                }
                 db.Games.Remove(game);
                 db.SaveChanges();
                 return "success";
@@ -63,20 +83,25 @@ namespace GameStore.Controllers
         {
             string fileName = formFile.FileName;
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+            string filePathForDB = Path.Combine("images", fileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 formFile.CopyTo(stream);
             }
-            return filePath;
+            return filePathForDB;
         }
-        private string UploadFiles(List<IFormFile> formFiles)
+        private void UploadFiles(List<IFormFile> formFiles, Game game)
         {
             string filePath = "";
             foreach (var formFile in formFiles)
             {
                 filePath = UploadFile(formFile);
+                ContentImage contentImage = new ContentImage();
+                contentImage.GameId = game.GameId;
+                contentImage.ContentImagePath = filePath;
+                db.ContentImages.Add(contentImage);
+                db.SaveChanges();
             }
-            return filePath;
         }
     }
 }

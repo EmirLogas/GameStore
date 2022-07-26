@@ -5,14 +5,10 @@ namespace GameStore.Models
 {
     public partial class ContentImage
     {
-        public ContentImage()
-        {
-            Games = new HashSet<Game>();
-        }
-
         public int ContentImageId { get; set; }
+        public int GameId { get; set; }
         public string ContentImagePath { get; set; } = null!;
 
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual Game Game { get; set; } = null!;
     }
 }
