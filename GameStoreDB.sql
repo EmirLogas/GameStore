@@ -38,10 +38,10 @@ CREATE TABLE Categories(
 	CategoryName VARCHAR(30) NOT NULL,
 );
 
-/*CREATE TABLE ContentImages(
+CREATE TABLE ContentImages(
 	ContentImageID INT IDENTITY(1,1) PRIMARY KEY,
 	ContentImagePath VARCHAR(30) NOT NULL,
-);*/
+);
 
 CREATE TABLE Games(
 	UserID INT NOT NULL,
@@ -51,13 +51,13 @@ CREATE TABLE Games(
 	GamePrice MONEY NOT NULL,
 	GameCategoryID INT NOT NULL,
 	GameReleaseDate DATE NOT NULL,
-	--GameCoverImagePath VARCHAR(30) NOT NULL,
-	--GameContentImageID INT NOT NULL,
+	GameCoverImagePath VARCHAR(50) NOT NULL,
+	GameContentImageID INT NOT NULL,
 	GameDeveloper VARCHAR(30) NOT NULL,
 	GamePublisher VARCHAR(30) NOT NULL,
 	FOREIGN KEY (GameCategoryID) REFERENCES Categories(CategoryID),
-	FOREIGN KEY (UserID) REFERENCES Users(UserID)
-	--FOREIGN KEY (GameContentImageID) REFERENCES ContentImages(ContentImageID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID),
+	FOREIGN KEY (GameContentImageID) REFERENCES ContentImages(ContentImageID),
 );
 
 /*CREATE TABLE Developers(

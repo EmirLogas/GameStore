@@ -20,10 +20,13 @@ namespace GameStore.Models
         public decimal GamePrice { get; set; }
         public int GameCategoryId { get; set; }
         public DateTime GameReleaseDate { get; set; }
+        public string GameCoverImagePath { get; set; } = null!;
+        public int GameContentImageId { get; set; }
         public string GameDeveloper { get; set; } = null!;
         public string GamePublisher { get; set; } = null!;
 
         public virtual Category GameCategory { get; set; } = null!;
+        public virtual ContentImage GameContentImage { get; set; } = null!;
         public virtual User User { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
 

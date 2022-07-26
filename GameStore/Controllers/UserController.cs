@@ -33,19 +33,6 @@ namespace GameStore.Controllers
         }
 
         [HttpPost]
-        /*public IActionResult Login(User u)
-        {
-            User user = db.Users.First(x => x.UserEmail == u.UserEmail && x.UserPassword == u.UserPassword);
-            if (user != null)
-            {
-                ViewBag.CurrentUser = user;
-                return RedirectToAction("Index");
-            }
-            else
-                return View();
-        }*/
-
-        [HttpPost]
         public async Task<IActionResult> Login(User u)
         {
             User user = db.Users.First(x => x.UserEmail == u.UserEmail && x.UserPassword == u.UserPassword);
@@ -61,11 +48,6 @@ namespace GameStore.Controllers
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 };
-
-               /* List<Claim> claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.Name, user.UserName));
-                claims.Add(new Claim(ClaimTypes.Email, user.UserEmail));
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));*/
 
                 var claimsIdentity = new ClaimsIdentity(
                     claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -101,6 +83,13 @@ namespace GameStore.Controllers
 
                 return RedirectToAction("Index");
             }
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index");
         }
     }
 }
