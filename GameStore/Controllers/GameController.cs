@@ -39,9 +39,10 @@ namespace GameStore.Controllers
         public IActionResult Game(int id)
         {
             Game game = db.Games.First(x => x.GameId == id);
+            List<ContentImage> contentImages = db.ContentImages.Where(x => x.GameId == id).ToList();
+            ViewBag.ContentImages = contentImages;
             return View(game);
         }
-
 
 
         [Authorize]

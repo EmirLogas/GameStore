@@ -4,7 +4,45 @@
 	ViewBag.Title = @Model.GameName;
 }
 
-<div class="container">
+@section Styles{
+	<style>
+		
+	</style>
+}
+
+	<div class="container">
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				@{
+				int counter = 0;
+			}
+			@foreach (var item in ViewBag.ContentImages)
+			{
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@counter" class="@(counter == 0 ? "active" : "")" aria-current="@(counter == 0 ? "true" : "")" aria-label="Slide @(counter+1)"></button>
+				counter++;
+			}
+		</div>
+		<div class="carousel-inner">
+			@{
+				int counter2 = 0;
+			}
+			@foreach (var item in ViewBag.ContentImages)
+			{
+				<div class="carousel-item @(counter2 == 0 ? "active" : "")">
+					<img src="~/@item.ContentImagePath" class="d-block w-100 mx-auto" alt="...">
+				</div>
+				counter2++;
+			}
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
 	<h1>@Model.GameName</h1>
 	<h2>@Model.GamePrice</h2>
 	<p>@Model.GameDescription</p>

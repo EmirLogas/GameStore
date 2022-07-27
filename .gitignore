@@ -6,6 +6,9 @@
 # Drawio
 *drawio.*
 
+# Images
+images/
+
 # User-specific files
 *.rsuser
 *.suo
