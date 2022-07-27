@@ -9,7 +9,7 @@ namespace GameStore.Controllers
     {
         GameStoreDBContext db = new GameStoreDBContext();
         [Authorize]
-        public IActionResult ListGame()
+        public IActionResult ListReleased()
         {
             List<Game> games = db.Games.ToList();
             ViewBag.Categories = db.Categories.ToList();
@@ -43,7 +43,6 @@ namespace GameStore.Controllers
             ViewBag.ContentImages = contentImages;
             return View(game);
         }
-
 
         [Authorize]
         [HttpPost]
@@ -79,7 +78,7 @@ namespace GameStore.Controllers
                 return "fail";
             }
         }
-
+        [Authorize]
         private string UploadFile(IFormFile formFile)
         {
             string fileName = formFile.FileName;
@@ -91,6 +90,7 @@ namespace GameStore.Controllers
             }
             return filePathForDB;
         }
+        [Authorize]
         private void UploadFiles(List<IFormFile> formFiles, Game game)
         {
             string filePath = "";
@@ -103,6 +103,14 @@ namespace GameStore.Controllers
                 db.ContentImages.Add(contentImage);
                 db.SaveChanges();
             }
+        }
+
+        [Authorize]
+        public void BuyGame(int id)
+        {
+            User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            Game game = db.Games.First(x => x.GameId == id);
+            db.UserGames.Add(new UserGame() { UserId = user.UserId, GameId = game.GameId });
         }
     }
 }

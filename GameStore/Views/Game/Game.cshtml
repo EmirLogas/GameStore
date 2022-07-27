@@ -49,16 +49,26 @@
 		</div>
 
 		<div>
-			<div>
-				<h1>@Model.GameName</h1>
+			<div class="d-flex justify-content-between mt-3">
+				<div>
+					<h1>@Model.GameName</h1>
+				</div>
+
+				<div class="ms-auto">
+					<h2 class="text-lg">@Model.GamePrice.ToString("0.00")$</h2>
+				</div>
 			</div>
-			<div>
-				<h2>@Model.GamePrice.ToString("0.00")$</h2>
+			<div class="d-flex">
+				<div style="word-wrap:break-word; max-width: 70%;">
+					<p>@Model.GameDescription</p>
+				</div>
+				<div class="ms-auto">
+					<button type="button" asp-action="BuyGame" class="btn btn-primary"><h5>Buy Game</h5> </button>
+				</div>
 			</div>
+
+
 		</div>
-
-
-		<p>@Model.GameDescription</p>
 	</div>
 
 

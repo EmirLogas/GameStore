@@ -127,7 +127,7 @@ CREATE TABLE UserGames(
 	GameID INT NOT NULL,
 	FOREIGN KEY (UserID) REFERENCES Users(UserID),
 	FOREIGN KEY (GameID) REFERENCES Games(GameID),
-	PRIMARY KEY (UserID, GameID)
+	UNIQUE (UserID, GameID)
 );
 
 INSERT INTO Categories(CategoryName) VALUES ('Action');

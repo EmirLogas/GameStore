@@ -27,28 +27,36 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-controller="Game" asp-action="ListGame">Releases</a>
-						</li>
+						@{
+							if (User.FindFirst(ClaimTypes.Name) != null)
+							{
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-action="ListLibrary">My Library</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link text-dark" asp-action="ListReleased">Released Games</a>
+								</li>
+							}
+						}
 					</ul>
 					<ul class="navbar-nav ml-auto">
 						@{
 							if (User.FindFirst(ClaimTypes.Name) != null)
 							{
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-controller="User" asp-action="Account">Account</a>
+									<a class="nav-link text-dark" asp-action="Account">Account</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a>
+									<a class="nav-link text-dark" asp-action="Logout">Logout</a>
 								</li>
 							}
 							else
 							{
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
+									<a class="nav-link text-dark" asp-action="Login">Login</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
+									<a class="nav-link text-dark" asp-action="Register">Register</a>
 								</li>
 							}
 						}

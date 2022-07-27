@@ -11,7 +11,6 @@ namespace GameStore.Models
             ContentImages = new HashSet<ContentImage>();
             Osystems = new HashSet<Osystem>();
             Tags = new HashSet<Tag>();
-            Users = new HashSet<User>();
         }
 
         public int UserId { get; set; }
@@ -32,6 +31,5 @@ namespace GameStore.Models
 
         public virtual ICollection<Osystem> Osystems { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-        public virtual ICollection<User> Users { get; set; }
     }
 }
