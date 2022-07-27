@@ -1,0 +1,34 @@
+﻿@{
+	ViewData["Title"] = "My Library";
+}
+@model List<Game>
+
+<div class="container mt-2">
+	<table class="table table-primary table-hover table-bordered align-middle">
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Game Name</th>
+				<th scope="col">Price</th>
+				<th scope="col">Category</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				int tCounter = 1;
+			}
+			@foreach (var item in Model)
+			{
+				<tr>
+					<th scope="row">@tCounter</th>
+					@{
+						tCounter++;
+					}
+					<td>@item.GameName</td>
+					<td>@item.GamePrice.ToString("0.00")$</td>
+					<td>@item.GameCategory.CategoryName</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

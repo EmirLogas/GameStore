@@ -63,13 +63,19 @@
 					<p>@Model.GameDescription</p>
 				</div>
 				<div class="ms-auto">
-					<button type="button" asp-action="BuyGame" class="btn btn-primary"><h5>Buy Game</h5> </button>
+					@{
+						if (ViewBag.userGames == null)
+						{
+							<a type="button" href="/BuyGame/@Model.GameId" class="btn btn-primary" )><h5>Buy Game</h5> </a>
+						}
+						else
+						{
+							<a type="button" asp-action="ListLibrary" class="btn btn-primary" )><h5> Library </h5> </a>
+						}
+					}
+
 				</div>
 			</div>
-
-
 		</div>
 	</div>
-
-
 </div>

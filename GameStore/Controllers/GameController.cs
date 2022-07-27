@@ -11,7 +11,8 @@ namespace GameStore.Controllers
         [Authorize]
         public IActionResult ListReleased()
         {
-            List<Game> games = db.Games.ToList();
+            User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            List<Game> games = db.Games.Where(x => x.UserId == user.UserId).ToList();
             ViewBag.Categories = db.Categories.ToList();
             return View(games);
         }
@@ -34,12 +35,19 @@ namespace GameStore.Controllers
             db.SaveChanges();
             UploadFiles(formFiles, game);
 
-            return RedirectToAction("ListGame");
+            return RedirectToAction("ListReleased");
         }
         public IActionResult Game(int id)
         {
             Game game = db.Games.First(x => x.GameId == id);
             List<ContentImage> contentImages = db.ContentImages.Where(x => x.GameId == id).ToList();
+            if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+            {
+                User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+                List<UserGame> userGames = db.UserGames.Where(x => x.UserId == user.UserId && x.GameId == id).ToList();
+                ViewBag.userGames = userGames;
+            }
+
             ViewBag.ContentImages = contentImages;
             return View(game);
         }
@@ -106,11 +114,21 @@ namespace GameStore.Controllers
         }
 
         [Authorize]
-        public void BuyGame(int id)
+        public IActionResult BuyGame(int id)
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
             Game game = db.Games.First(x => x.GameId == id);
             db.UserGames.Add(new UserGame() { UserId = user.UserId, GameId = game.GameId });
+            db.SaveChanges();
+            return RedirectToAction("ListLibrary");
+        }
+
+        public IActionResult ListLibrary()
+        {
+            User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            List<Game> games = db.UserGames.Where(x => x.UserId == user.UserId).Select(x => x.Game).ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            return View(games);
         }
     }
 }

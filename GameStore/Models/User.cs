@@ -10,6 +10,7 @@ namespace GameStore.Models
             Comments = new HashSet<Comment>();
             Games = new HashSet<Game>();
             UserAuthorizations = new HashSet<UserAuthorization>();
+            UserGames = new HashSet<UserGame>();
             UserId1s = new HashSet<User>();
             UserId2s = new HashSet<User>();
         }
@@ -23,6 +24,7 @@ namespace GameStore.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Game> Games { get; set; }
         public virtual ICollection<UserAuthorization> UserAuthorizations { get; set; }
+        public virtual ICollection<UserGame> UserGames { get; set; }
 
         public virtual ICollection<User> UserId1s { get; set; }
         public virtual ICollection<User> UserId2s { get; set; }

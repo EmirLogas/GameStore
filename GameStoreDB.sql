@@ -123,6 +123,7 @@ CREATE TABLE Comments(
 );
 
 CREATE TABLE UserGames(
+	UserGameID INT IDENTITY(1,1) PRIMARY KEY,
 	UserID INT NOT NULL,
 	GameID INT NOT NULL,
 	FOREIGN KEY (UserID) REFERENCES Users(UserID),
@@ -151,3 +152,4 @@ INSERT INTO Categories(CategoryName) VALUES ('Card & Board');
 INSERT INTO Categories(CategoryName) VALUES ('Building & Automation');
 
 INSERT INTO Users(UserName, UserEmail, UserPassword) VALUES ('Emir', 'emir@hotmail.com', '123');
+INSERT INTO Users(UserName, UserEmail, UserPassword) VALUES ('Emir2', 'emir2@hotmail.com', '123');
