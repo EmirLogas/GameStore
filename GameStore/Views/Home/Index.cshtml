@@ -1,6 +1,6 @@
 ﻿@using GameStore.Models
 @{
-	ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Discover Games";
 }
 @model List<Game>
 
@@ -9,15 +9,14 @@
 
 	@if (@ViewBag.UserName != null)
 	{
-		<h1>
+		<h2 class="text-center mt-2">
 			Welcome @ViewBag.UserName
-			Welcome @ViewBag.Email
-		</h1>
+		</h2>
 	}
 
-	<h1 class="mt-2 mb-2 text-center">
+	<h2 class="mt-2 mb-4 text-center">
 		Discover Games
-	</h1>
+	</h2>
 
 	<div class="row mt-2">
 		@foreach (var item in Model)
