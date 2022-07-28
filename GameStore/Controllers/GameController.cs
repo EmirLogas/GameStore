@@ -37,6 +37,33 @@ namespace GameStore.Controllers
 
             return RedirectToAction("ListReleased");
         }
+
+        [Authorize]
+        public IActionResult EditGame(int id)
+        {
+            Game game = db.Games.First(x => x.GameId == id);
+            ViewBag.Categories = db.Categories.ToList();
+            return View(game);
+        }
+
+        [Authorize]
+        public IActionResult UpdateGame(Game game/*, IFormFile formFile, List<IFormFile> formFiles*/)
+        {
+            Game entity = db.Games.First(x => x.GameId == game.GameId);
+            if (entity != null)
+            {
+
+                entity.GameName = game.GameName;
+                entity.GamePrice = game.GamePrice;
+                entity.GameDescription = game.GameDescription;
+                entity.GamePublisher = game.GamePublisher;
+                entity.GameDeveloper = game.GameDeveloper;
+                entity.GameCategoryId = game.GameCategoryId;
+            }
+            db.SaveChanges();
+            return RedirectToAction("ListReleased");
+        }
+
         public IActionResult Game(int id)
         {
             Game game = db.Games.First(x => x.GameId == id);
@@ -86,6 +113,7 @@ namespace GameStore.Controllers
                 return "fail";
             }
         }
+        
         [Authorize]
         private string UploadFile(IFormFile formFile)
         {
@@ -98,6 +126,7 @@ namespace GameStore.Controllers
             }
             return filePathForDB;
         }
+        
         [Authorize]
         private void UploadFiles(List<IFormFile> formFiles, Game game)
         {
@@ -123,6 +152,7 @@ namespace GameStore.Controllers
             return RedirectToAction("ListLibrary");
         }
 
+        [Authorize]
         public IActionResult ListLibrary()
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));

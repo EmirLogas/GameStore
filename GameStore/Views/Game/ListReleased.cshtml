@@ -49,13 +49,13 @@
 					<td>@item.GamePrice.ToString("0.00")$</td>
 					<td>@item.GameCategory.CategoryName</td>
 					<td>
-						<button type="button" class="btn btn-info editGameBtn">
+						<a type="button" class="btn btn-info editGameBtn" href="/EditGame/@item.GameId">
 							Edit
-						</button>
+						</a>
 
-						<button type="button" class="btn btn-primary openGameModalBtn" data-gameid="@item.GameId" data-gamename="@item.GameName" data-bs-toggle="modal" data-bs-target="#DelGameModal">
+						<a type="button" class="btn btn-primary openGameModalBtn" data-gameid="@item.GameId" data-gamename="@item.GameName" data-bs-toggle="modal" data-bs-target="#DelGameModal">
 							Delete
-						</button>
+						</a>
 					</td>
 				</tr>
 			}

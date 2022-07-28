@@ -1,38 +1,40 @@
 ﻿@using GameStore.Models
 @{
-	ViewData["Title"] = "Add Game";
+	ViewData["Title"] = "Edit Game";
 }
+@model Game
 
 <div class="container">
-	<form class="row g-3 needs-validation mt-3" method="post" asp-action="AddGame" enctype="multipart/form-data" novalidate>
+	<form class="row g-3 needs-validation mt-3" method="post" asp-action="UpdateGame" enctype="multipart/form-data" novalidate>
 		<div class="col-md-4">
 			<label for="GameNameValidation" class="form-label">Game Name</label>
-			<input type="text" class="form-control" id="GameNameValidation" name="GameName" required>
+			<input type="text" class="form-control" id="GameNameValidation" name="GameName" value="@Model.GameName" required>
 			<div class="valid-feedback">
 				Looks good!
 			</div>
 		</div>
+			<input type="hidden" class="form-control" id="PriceValidation" name="GameId" value="@Model.GameId" required>
 		<div class="col-md-4">
 			<label for="PriceValidation" class="form-label">Price</label>
-			<input type="text" class="form-control" id="PriceValidation" name="GamePrice" required>
+			<input type="text" class="form-control" id="PriceValidation" name="GamePrice" value="@Model.GamePrice" required>
 			<div class="invalid-feedback">
 				Please provide a valid Price.
 			</div>
 		</div>
 		<div class="input-group col-md-8">
 			<span class="input-group-text">Game Description</span>
-			<textarea class="form-control" aria-label="Game Description" name="GameDescription"></textarea>
+			<textarea class="form-control" aria-label="Game Description" name="GameDescription">@Model.GameDescription</textarea>
 		</div>
 		<div class="col-md-4">
 			<label for="PublisherValidation" class="form-label">Game Publisher</label>
-			<input type="text" class="form-control" id="PublisherValidation" name="GamePublisher" required>
+			<input type="text" class="form-control" id="PublisherValidation" name="GamePublisher" value="@Model.GamePublisher" required>
 			<div class="invalid-feedback">
 				Please provide a valid Publisher.
 			</div>
 		</div>
 		<div class="col-md-4">
 			<label for="DeveloperValidation" class="form-label">Game Developer</label>
-			<input type="text" class="form-control" id="DeveloperValidation" name="GameDeveloper" required>
+			<input type="text" class="form-control" id="DeveloperValidation" name="GameDeveloper" value="@Model.GameDeveloper" required>
 			<div class="invalid-feedback">
 				Please provide a valid Developer.
 			</div>
@@ -42,7 +44,16 @@
 			<select class="form-select" id="CategoryValidation" name="GameCategoryID" required>
 				@foreach (var item in ViewBag.Categories)
 				{
-					<option value="@item.CategoryId">@item.CategoryName</option>
+					@if (Model.GameCategoryId == item.CategoryId)
+					{
+						<option value="@item.CategoryId" selected>@item.CategoryName</option>
+					}
+					else
+					{
+						<option value="@item.CategoryId">@item.CategoryName</option>
+					}
+
+
 				}
 			</select>
 			<div class="invalid-feedback">
@@ -50,10 +61,10 @@
 			</div>
 		</div>
 
-		
+		<!--
 		<div class="mb-3">
 			<label for="formFile" class="form-label">Import Cover Image</label>
-			<input  class="form-control" type="file" id="formFile" name="formFile" required>
+			<input class="form-control" type="file" id="formFile" name="formFile" required>
 			<div class="invalid-feedback">
 				Please select an Image.
 			</div>
@@ -65,7 +76,8 @@
 				Please select an Image.
 			</div>
 		</div>
-		
+		-->
+
 
 		<div class="col-12">
 			<div class="form-check">
@@ -79,7 +91,7 @@
 			</div>
 		</div>
 		<div class="col-12">
-			<button class="btn btn-primary mb-3" type="submit" style="float:right">Release Game</button>
+			<button class="btn btn-primary mb-3" type="submit" style="float:right">Save Game</button>
 		</div>
 	</form>
 </div>
