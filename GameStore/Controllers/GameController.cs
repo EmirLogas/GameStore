@@ -29,13 +29,41 @@ namespace GameStore.Controllers
         public IActionResult AddGame(Game game, IFormFile formFile, List<IFormFile> formFiles)
         {
             game.User = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
-            game.GameCoverImagePath = UploadFile(formFile);
+            game.GameCoverImagePath = UploadFile(formFile, game);
 
             db.Games.Add(game);
             db.SaveChanges();
             UploadFiles(formFiles, game);
 
             return RedirectToAction("ListReleased");
+        }
+
+        [Authorize]
+        private string UploadFile(IFormFile formFile, Game game)
+        {
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", game.GameName + fileName);
+            string filePathForDB = Path.Combine("images", game.GameName + fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                formFile.CopyTo(stream);
+            }
+            return filePathForDB;
+        }
+
+        [Authorize]
+        private void UploadFiles(List<IFormFile> formFiles, Game game)
+        {
+            string filePath = "";
+            foreach (var formFile in formFiles)
+            {
+                filePath = UploadFile(formFile, game);
+                ContentImage contentImage = new ContentImage();
+                contentImage.GameId = game.GameId;
+                contentImage.ContentImagePath = filePath;
+                db.ContentImages.Add(contentImage);
+                db.SaveChanges();
+            }
         }
 
         [Authorize]
@@ -111,34 +139,6 @@ namespace GameStore.Controllers
             catch (Exception)
             {
                 return "fail";
-            }
-        }
-        
-        [Authorize]
-        private string UploadFile(IFormFile formFile)
-        {
-            string fileName = formFile.FileName;
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
-            string filePathForDB = Path.Combine("images", fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                formFile.CopyTo(stream);
-            }
-            return filePathForDB;
-        }
-        
-        [Authorize]
-        private void UploadFiles(List<IFormFile> formFiles, Game game)
-        {
-            string filePath = "";
-            foreach (var formFile in formFiles)
-            {
-                filePath = UploadFile(formFile);
-                ContentImage contentImage = new ContentImage();
-                contentImage.GameId = game.GameId;
-                contentImage.ContentImagePath = filePath;
-                db.ContentImages.Add(contentImage);
-                db.SaveChanges();
             }
         }
 
