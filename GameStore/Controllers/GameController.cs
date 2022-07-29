@@ -102,7 +102,14 @@ namespace GameStore.Controllers
                 List<UserGame> userGames = db.UserGames.Where(x => x.UserId == user.UserId && x.GameId == id).ToList();
                 ViewBag.userGames = userGames;
             }
-
+            List<Comment> comments = db.Comments.Where(x => x.GameId == id).ToList();
+            List<User> commentsUsers = new List<User>();
+            foreach (var comment in comments)
+            {
+                commentsUsers.Add(db.Users.First(x => x.UserId == comment.UserId));
+            }
+            ViewBag.commentsUsers = commentsUsers;
+            ViewBag.comments = comments;
             ViewBag.ContentImages = contentImages;
             return View(game);
         }
@@ -159,6 +166,16 @@ namespace GameStore.Controllers
             List<Game> games = db.UserGames.Where(x => x.UserId == user.UserId).Select(x => x.Game).ToList();
             ViewBag.Categories = db.Categories.ToList();
             return View(games);
+        }
+
+        [Authorize]
+        public IActionResult AddComment(int GameId, Comment comment)
+        {
+            comment.User = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            comment.GameId = GameId;
+            db.Comments.Add(comment);
+            db.SaveChanges();
+            return RedirectToAction("Game", new { id = GameId });
         }
     }
 }
