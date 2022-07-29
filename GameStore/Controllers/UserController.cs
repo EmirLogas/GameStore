@@ -22,6 +22,7 @@ namespace GameStore.Controllers
         public IActionResult Register(User u)
         {
             u.UserName = "example";
+            u.UserTypeId = 1;
             db.Users.Add(u);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -47,6 +48,7 @@ namespace GameStore.Controllers
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.UserEmail),
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                    new Claim("Role", user.UserTypeId.ToString())
                 };
 
                 var claimsIdentity = new ClaimsIdentity(
@@ -81,7 +83,15 @@ namespace GameStore.Controllers
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
 
-                return RedirectToAction("Index");
+                if (user.UserTypeId == 1)
+                {
+                    return RedirectToAction("AdminIndex");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
             }
         }
 

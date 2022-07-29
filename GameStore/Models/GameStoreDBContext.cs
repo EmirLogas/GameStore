@@ -23,7 +23,6 @@ namespace GameStore.Models
         public virtual DbSet<Osystem> Osystems { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-        public virtual DbSet<UserAuthorization> UserAuthorizations { get; set; } = null!;
         public virtual DbSet<UserGame> UserGames { get; set; } = null!;
         public virtual DbSet<UserType> UserTypes { get; set; } = null!;
 
@@ -67,13 +66,13 @@ namespace GameStore.Models
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Comments__GameID__59063A47");
+                    .HasConstraintName("FK__Comments__GameID__5535A963");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Comments__UserID__5812160E");
+                    .HasConstraintName("FK__Comments__UserID__5441852A");
             });
 
             modelBuilder.Entity<ContentImage>(entity =>
@@ -90,7 +89,7 @@ namespace GameStore.Models
                     .WithMany(p => p.ContentImages)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ContentIm__GameI__48CFD27E");
+                    .HasConstraintName("FK__ContentIm__GameI__44FF419A");
             });
 
             modelBuilder.Entity<Game>(entity =>
@@ -129,23 +128,23 @@ namespace GameStore.Models
                     .WithMany(p => p.Games)
                     .HasForeignKey(d => d.GameCategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Games__GameCateg__44FF419A");
+                    .HasConstraintName("FK__Games__GameCateg__412EB0B6");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Games)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Games__UserID__45F365D3");
+                    .HasConstraintName("FK__Games__UserID__4222D4EF");
 
                 entity.HasMany(d => d.Osystems)
                     .WithMany(p => p.Games)
                     .UsingEntity<Dictionary<string, object>>(
                         "GameOsystem",
-                        l => l.HasOne<Osystem>().WithMany().HasForeignKey("OsystemId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__OSyst__5441852A"),
-                        r => r.HasOne<Game>().WithMany().HasForeignKey("GameId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__GameI__534D60F1"),
+                        l => l.HasOne<Osystem>().WithMany().HasForeignKey("OsystemId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__OSyst__5070F446"),
+                        r => r.HasOne<Game>().WithMany().HasForeignKey("GameId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__GameI__4F7CD00D"),
                         j =>
                         {
-                            j.HasKey("GameId", "OsystemId").HasName("PK__GameOSys__9AE3098CA060D44C");
+                            j.HasKey("GameId", "OsystemId").HasName("PK__GameOSys__9AE3098CDBBCBC28");
 
                             j.ToTable("GameOSystems");
 
@@ -158,11 +157,11 @@ namespace GameStore.Models
                     .WithMany(p => p.Games)
                     .UsingEntity<Dictionary<string, object>>(
                         "GameTag",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameTags__TagID__4E88ABD4"),
-                        r => r.HasOne<Game>().WithMany().HasForeignKey("GameId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameTags__GameID__4D94879B"),
+                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameTags__TagID__4AB81AF0"),
+                        r => r.HasOne<Game>().WithMany().HasForeignKey("GameId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameTags__GameID__49C3F6B7"),
                         j =>
                         {
-                            j.HasKey("GameId", "TagId").HasName("PK__GameTags__FCEF5879467FA29F");
+                            j.HasKey("GameId", "TagId").HasName("PK__GameTags__FCEF58799DDCA0A9");
 
                             j.ToTable("GameTags");
 
@@ -213,15 +212,17 @@ namespace GameStore.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
+
                 entity.HasMany(d => d.UserId1s)
                     .WithMany(p => p.UserId2s)
                     .UsingEntity<Dictionary<string, object>>(
                         "FriendUser",
-                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3F466844"),
-                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__403A8C7D"),
+                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3B75D760"),
+                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3C69FB99"),
                         j =>
                         {
-                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__284763951B4C114A");
+                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__28476395FA18C71D");
 
                             j.ToTable("FriendUsers");
 
@@ -234,11 +235,11 @@ namespace GameStore.Models
                     .WithMany(p => p.UserId1s)
                     .UsingEntity<Dictionary<string, object>>(
                         "FriendUser",
-                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__403A8C7D"),
-                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3F466844"),
+                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3C69FB99"),
+                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3B75D760"),
                         j =>
                         {
-                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__284763951B4C114A");
+                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__28476395FA18C71D");
 
                             j.ToTable("FriendUsers");
 
@@ -248,32 +249,9 @@ namespace GameStore.Models
                         });
             });
 
-            modelBuilder.Entity<UserAuthorization>(entity =>
-            {
-                entity.ToTable("UserAuthorization");
-
-                entity.Property(e => e.UserAuthorizationId).HasColumnName("UserAuthorizationID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserAuthorizations)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserAutho__UserI__3B75D760");
-
-                entity.HasOne(d => d.UserType)
-                    .WithMany(p => p.UserAuthorizations)
-                    .HasForeignKey(d => d.UserTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserAutho__UserT__3C69FB99");
-            });
-
             modelBuilder.Entity<UserGame>(entity =>
             {
-                entity.HasIndex(e => new { e.UserId, e.GameId }, "UQ__UserGame__D52345D038B704BB")
+                entity.HasIndex(e => new { e.UserId, e.GameId }, "UQ__UserGame__D52345D0ACAE0A13")
                     .IsUnique();
 
                 entity.Property(e => e.UserGameId).HasColumnName("UserGameID");
@@ -286,13 +264,13 @@ namespace GameStore.Models
                     .WithMany(p => p.UserGames)
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGames__GameI__5DCAEF64");
+                    .HasConstraintName("FK__UserGames__GameI__59FA5E80");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserGames)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UserGames__UserI__5CD6CB2B");
+                    .HasConstraintName("FK__UserGames__UserI__59063A47");
             });
 
             modelBuilder.Entity<UserType>(entity =>

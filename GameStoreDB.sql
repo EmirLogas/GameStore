@@ -4,25 +4,18 @@
 
 --DROP DATABASE GameStoreDB
 
-CREATE TABLE Users(
-	UserID INT IDENTITY(1,1) PRIMARY KEY,
-	UserName VARCHAR(30) NOT NULL,
-	UserEmail VARCHAR(30) NOT NULL,
-	UserPassword VARCHAR(30) NOT NULL,
-	UserRegisterDate DATETIME DEFAULT GETDATE()
-);
-
 CREATE TABLE UserTypes(
 	UserTypeID INT IDENTITY(1,1) PRIMARY KEY,
 	UserTypeName VARCHAR(30) NOT NULL,
 );
 
-CREATE TABLE UserAuthorization(
-	UserAuthorizationID INT IDENTITY(1,1) PRIMARY KEY,
-	UserID INT NOT NULL,
+CREATE TABLE Users(
+	UserID INT IDENTITY(1,1) PRIMARY KEY,
+	UserName VARCHAR(30) NOT NULL,
+	UserEmail VARCHAR(30) NOT NULL,
+	UserPassword VARCHAR(30) NOT NULL,
 	UserTypeID INT NOT NULL,
-	FOREIGN KEY (UserID) REFERENCES Users(UserID),
-	FOREIGN KEY (UserTypeID) REFERENCES UserTypes(UserTypeID),
+	UserRegisterDate DATETIME DEFAULT GETDATE()
 );
 
 CREATE TABLE FriendUsers(
@@ -151,5 +144,9 @@ INSERT INTO Categories(CategoryName) VALUES ('Space & Flight');
 INSERT INTO Categories(CategoryName) VALUES ('Card & Board');
 INSERT INTO Categories(CategoryName) VALUES ('Building & Automation');
 
-INSERT INTO Users(UserName, UserEmail, UserPassword) VALUES ('Emir', 'emir@hotmail.com', '123');
-INSERT INTO Users(UserName, UserEmail, UserPassword) VALUES ('Emir2', 'emir2@hotmail.com', '123');
+INSERT INTO UserTypes(UserTypeName) VALUES ('Admin');
+INSERT INTO UserTypes(UserTypeName) VALUES ('User');
+
+INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Admin', 'admin@hotmail.com', '123',1);
+INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Emir', 'emir@hotmail.com', '123', 2);
+INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Emir2', 'emir2@hotmail.com', '123', 2);

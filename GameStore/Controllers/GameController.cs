@@ -8,7 +8,8 @@ namespace GameStore.Controllers
     public class GameController : Controller
     {
         GameStoreDBContext db = new GameStoreDBContext();
-        [Authorize]
+
+        [Authorize(Policy = "UserOnly")]
         public IActionResult ListReleased()
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -17,14 +18,14 @@ namespace GameStore.Controllers
             return View(games);
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult AddGame()
         {
             ViewBag.Categories = db.Categories.ToList();
             return View();
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         [HttpPost]
         public IActionResult AddGame(Game game, IFormFile formFile, List<IFormFile> formFiles)
         {
@@ -38,7 +39,7 @@ namespace GameStore.Controllers
             return RedirectToAction("ListReleased");
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         private string UploadFile(IFormFile formFile, Game game)
         {
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
@@ -51,7 +52,7 @@ namespace GameStore.Controllers
             return filePathForDB;
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         private void UploadFiles(List<IFormFile> formFiles, Game game)
         {
             string filePath = "";
@@ -66,7 +67,7 @@ namespace GameStore.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult EditGame(int id)
         {
             Game game = db.Games.First(x => x.GameId == id);
@@ -74,7 +75,7 @@ namespace GameStore.Controllers
             return View(game);
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult UpdateGame(Game game/*, IFormFile formFile, List<IFormFile> formFiles*/)
         {
             Game entity = db.Games.First(x => x.GameId == game.GameId);
@@ -114,7 +115,7 @@ namespace GameStore.Controllers
             return View(game);
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         [HttpPost]
         public string DeleteGame(int id)
         {
@@ -149,7 +150,7 @@ namespace GameStore.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult BuyGame(int id)
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -159,7 +160,7 @@ namespace GameStore.Controllers
             return RedirectToAction("ListLibrary");
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult ListLibrary()
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -168,7 +169,7 @@ namespace GameStore.Controllers
             return View(games);
         }
 
-        [Authorize]
+        [Authorize(Policy = "UserOnly")]
         public IActionResult AddComment(int GameId, Comment comment)
         {
             comment.User = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
