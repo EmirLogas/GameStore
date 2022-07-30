@@ -140,6 +140,12 @@ namespace GameStore.Controllers
                     }
                     db.ContentImages.Remove(contentImage);
                 }
+                // Delete Game Comments
+                IQueryable<Comment> comments = db.Comments.Where(x => x.GameId == id);
+                foreach (Comment comment in comments)
+                {
+                    db.Comments.Remove(comment);
+                }
                 db.Games.Remove(game);
                 db.SaveChanges();
                 return "success";
