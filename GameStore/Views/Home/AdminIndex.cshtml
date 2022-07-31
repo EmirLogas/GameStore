@@ -1,4 +1,69 @@
-﻿<h1>Oyun sayısı = @ViewBag.GameCount</h1>
-<h1>Kullanıcı sayısı = @ViewBag.UserCount</h1>
-<h1>Toplam satılan oyun sayısı = @ViewBag.soldGameCount</h1>
-<h1>Satılan oyunlardan gelen toplam gelir = @ViewBag.soldGameRevenue</h1>
+﻿<div class="container mt-5">
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="box d-flex rounded-2 align-items-center bg-primary mb-4 mb-lg-0 p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.GameCount</h3> <span class="d-block ms-2">Game</span>
+					</div>
+					<p class="fs-normal mb-0">Published game quantity.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="box d-flex rounded-2 align-items-center bg-success mb-4 mb-lg-0 p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.UserCount</h3> <span class="d-block ms-2">User</span>
+					</div>
+					<p class="fs-normal mb-0">Number of users</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="box d-flex rounded-2 align-items-center bg-danger p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.SoldGameCount</h3> <span class="d-block ms-2">Game</span>
+					</div>
+					<p class="fs-normal mb-0">Number of games sold.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col-lg-6">
+			<div class="box d-flex rounded-2 align-items-center bg-info mb-4 mb-lg-0 p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.SoldGameRevenue.ToString("0.00")$</h3> <span class="d-block ms-2">Income</span>
+					</div>
+					<p class="fs-normal mb-0">Revenue from games sold.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="box d-flex rounded-2 align-items-center bg-warning mb-4 mb-lg-0 p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.CommentCount</h3> <span class="d-block ms-2">Comment</span>
+					</div>
+					<p class="fs-normal mb-0">Number of comments</p>
+				</div>
+			</div>
+		</div>
+		<!--
+		<div class="col-lg-4">
+			<div class="box d-flex rounded-2 align-items-center p-3">
+				<div class="ms-3">
+					<div class="d-flex align-items-center">
+						<h3 class="mb-0">@ViewBag.SoldGameCount</h3> <span class="d-block ms-2">Game</span>
+					</div>
+					<p class="fs-normal mb-0">Number of games sold.</p>
+				</div>
+			</div>
+		</div>
+		-->
+	</div>
+</div>

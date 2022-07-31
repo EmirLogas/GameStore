@@ -31,10 +31,24 @@ namespace GameStore.Controllers
         [Authorize(Policy = "AdminOnly")]
         public IActionResult AdminIndex()
         {
+            // Total games sold count
+            int soldGameCount = db.UserGames.Count();
+            ViewBag.SoldGameCount = soldGameCount;
+
+            // Total revenue from games sold
+            decimal soldGameRevenue = db.UserGames.Sum(x => x.Game.GamePrice);
+            ViewBag.SoldGameRevenue = soldGameRevenue;
+
             int GameCount = db.Games.Count();
-            int User = db.Users.Count();
             ViewBag.GameCount = GameCount;
+
+            int User = db.Users.Count();
             ViewBag.UserCount = User;
+
+            // Total comments count
+            int commentCount = db.Comments.Count();
+            ViewBag.CommentCount = commentCount;
+
             return View();
         }
 
