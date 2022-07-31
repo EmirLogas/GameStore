@@ -66,19 +66,19 @@
 			</div>
 			<div class="ms-auto">
 				@{
-					if (ViewBag.userGames == null)
+					if (ViewBag.userGamesCount == 1)
 					{
-						<a type="button" href="/BuyGame/@Model.GameId" class="btn btn-primary" )><h5>Buy Game</h5> </a>
+						<a type="button" asp-action="ListLibrary" class="btn btn-primary" )><h5> Library </h5> </a>
 					}
 					else
 					{
-						<a type="button" asp-action="ListLibrary" class="btn btn-primary" )><h5> Library </h5> </a>
+						<a type="button" href="/BuyGame/@Model.GameId" class="btn btn-primary" )><h5>Buy Game</h5> </a>
 					}
 				}
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="row d-flex justify-content-center mt-4">
 		<div>
 			<div class="card shadow-0 border" style="background-color: #f0f2f5;">

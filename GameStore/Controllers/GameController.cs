@@ -101,7 +101,8 @@ namespace GameStore.Controllers
             {
                 User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
                 List<UserGame> userGames = db.UserGames.Where(x => x.UserId == user.UserId && x.GameId == id).ToList();
-                ViewBag.userGames = userGames;
+                int userGamesCount = userGames.Count();
+                ViewBag.userGamesCount = userGamesCount;
             }
             List<Comment> comments = db.Comments.Where(x => x.GameId == id).ToList();
             List<User> commentsUsers = new List<User>();
