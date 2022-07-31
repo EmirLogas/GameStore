@@ -1,0 +1,24 @@
+﻿@using GameStore.Models
+@{
+	ViewData["Title"] = "Account";
+}
+@model User
+
+<div class="container mt-5">
+	<form method="post" asp-action="EditAccount">
+		<input type="hidden" class="form-control" id="PriceValidation" name="UserID" value="@Model.UserId" required>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" id="floatingInput" name="UserName" value="@Model.UserName" placeholder="name@example.com">
+			<label for="floatingInput">Name</label>
+		</div>
+		<div class="form-floating mb-3">
+			<input type="email" class="form-control" id="floatingInput" name="UserEmail" value="@Model.UserEmail" placeholder="name@example.com">
+			<label for="floatingInput">Email address</label>
+		</div>
+		<div class="form-floating">
+			<input type="password" class="form-control" id="floatingPassword" name="UserPassword" placeholder="Password">
+			<label for="floatingPassword">Password</label>
+		</div>
+		<button class="btn btn-primary mt-3" type="submit" style="float:right">Save Account</button>
+	</form>
+</div>

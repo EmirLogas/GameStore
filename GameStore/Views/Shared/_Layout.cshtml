@@ -43,8 +43,9 @@
 						@{
 							if (User.FindFirst(ClaimTypes.Name) != null)
 							{
+								string userID = User.FindFirstValue(ClaimTypes.NameIdentifier);
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="Account">Account</a>
+									<a class="nav-link text-dark" href="EditAccountPage/@userID">Account</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link text-dark" asp-action="Logout">Logout</a>
@@ -70,7 +71,7 @@
 		@RenderBody()
 	</main>
 
-	<footer class="border-top footer text-muted"style="background: white">
+	<footer class="border-top footer text-muted" style="background: white">
 		<div class="container">
 			&copy; 2022 - GameStore
 		</div>

@@ -147,6 +147,13 @@ namespace GameStore.Controllers
                 {
                     db.Comments.Remove(comment);
                 }
+
+                IQueryable<UserGame> userGames = db.UserGames.Where(x => x.GameId == id);
+                foreach (UserGame userGame in userGames)
+                {
+                    db.UserGames.Remove(userGame);
+                }
+
                 db.Games.Remove(game);
                 db.SaveChanges();
                 return "success";

@@ -3,6 +3,7 @@ using GameStore.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameStore.Controllers
 {
@@ -95,10 +96,30 @@ namespace GameStore.Controllers
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+            return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public IActionResult EditAccountPage(int id)
+        {
+            User u = db.Users.Where(x => x.UserId == id).First();
+            return View(u);
+        }
+
+        [Authorize]
+        public IActionResult EditAccount(User u)
+        {
+            User entity = db.Users.Where(x => x.UserId == u.UserId).First();
+            entity.UserName = u.UserName;
+            entity.UserEmail = u.UserEmail;
+            entity.UserPassword = u.UserPassword;
+            db.SaveChanges();
+            _ = Login(u);
             return RedirectToAction("Index");
         }
     }
