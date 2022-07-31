@@ -7,12 +7,12 @@ namespace GameStore.Models
     {
         public Osystem()
         {
-            Games = new HashSet<Game>();
+            GameOsystems = new HashSet<GameOsystem>();
         }
 
         public int OsystemId { get; set; }
         public string OsystemName { get; set; } = null!;
 
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<GameOsystem> GameOsystems { get; set; }
     }
 }

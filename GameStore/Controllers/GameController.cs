@@ -34,13 +34,39 @@ namespace GameStore.Controllers
 
         [Authorize(Policy = "UserOnly")]
         [HttpPost]
-        public IActionResult AddGame(Game game, IFormFile formFile, List<IFormFile> formFiles)
+        public IActionResult AddGame(Game game, IFormFile formFile, List<IFormFile> formFiles, String Windows, String Linux, String MacOS)
         {
             game.User = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
             game.GameCoverImagePath = UploadFile(formFile, game);
-
             db.Games.Add(game);
             db.SaveChanges();
+
+            if (Windows == "Windows")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 1;
+                db.GameOsystems.Add(gameOsystem);
+            }
+
+            if (Linux == "Linux")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 2;
+                db.GameOsystems.Add(gameOsystem);
+            }
+
+            if (MacOS == "Macos")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 3;
+                db.GameOsystems.Add(gameOsystem);
+            }
+
+            db.SaveChanges();
+
             UploadFiles(formFiles, game);
 
             return RedirectToAction("ListReleased");

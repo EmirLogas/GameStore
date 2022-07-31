@@ -9,8 +9,8 @@ namespace GameStore.Models
         {
             Comments = new HashSet<Comment>();
             ContentImages = new HashSet<ContentImage>();
+            GameOsystems = new HashSet<GameOsystem>();
             UserGames = new HashSet<UserGame>();
-            Osystems = new HashSet<Osystem>();
             Tags = new HashSet<Tag>();
         }
 
@@ -29,9 +29,9 @@ namespace GameStore.Models
         public virtual User User { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ContentImage> ContentImages { get; set; }
+        public virtual ICollection<GameOsystem> GameOsystems { get; set; }
         public virtual ICollection<UserGame> UserGames { get; set; }
 
-        public virtual ICollection<Osystem> Osystems { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }

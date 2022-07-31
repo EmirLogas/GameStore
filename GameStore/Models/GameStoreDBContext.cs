@@ -20,6 +20,7 @@ namespace GameStore.Models
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<ContentImage> ContentImages { get; set; } = null!;
         public virtual DbSet<Game> Games { get; set; } = null!;
+        public virtual DbSet<GameOsystem> GameOsystems { get; set; } = null!;
         public virtual DbSet<Osystem> Osystems { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
@@ -136,23 +137,6 @@ namespace GameStore.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Games__UserID__4222D4EF");
 
-                entity.HasMany(d => d.Osystems)
-                    .WithMany(p => p.Games)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "GameOsystem",
-                        l => l.HasOne<Osystem>().WithMany().HasForeignKey("OsystemId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__OSyst__5070F446"),
-                        r => r.HasOne<Game>().WithMany().HasForeignKey("GameId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__GameOSyst__GameI__4F7CD00D"),
-                        j =>
-                        {
-                            j.HasKey("GameId", "OsystemId").HasName("PK__GameOSys__9AE3098CDBBCBC28");
-
-                            j.ToTable("GameOSystems");
-
-                            j.IndexerProperty<int>("GameId").HasColumnName("GameID");
-
-                            j.IndexerProperty<int>("OsystemId").HasColumnName("OSystemID");
-                        });
-
                 entity.HasMany(d => d.Tags)
                     .WithMany(p => p.Games)
                     .UsingEntity<Dictionary<string, object>>(
@@ -169,6 +153,35 @@ namespace GameStore.Models
 
                             j.IndexerProperty<int>("TagId").HasColumnName("TagID");
                         });
+            });
+
+            modelBuilder.Entity<GameOsystem>(entity =>
+            {
+                entity.HasKey(e => e.GameOsystemsId)
+                    .HasName("PK__GameOSys__4BB8449BC408CB8A");
+
+                entity.ToTable("GameOSystems");
+
+                entity.HasIndex(e => new { e.GameId, e.OsystemId }, "UQ__GameOSys__9AE3098DD910C10E")
+                    .IsUnique();
+
+                entity.Property(e => e.GameOsystemsId).HasColumnName("GameOSystemsID");
+
+                entity.Property(e => e.GameId).HasColumnName("GameID");
+
+                entity.Property(e => e.OsystemId).HasColumnName("OSystemID");
+
+                entity.HasOne(d => d.Game)
+                    .WithMany(p => p.GameOsystems)
+                    .HasForeignKey(d => d.GameId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__GameOSyst__GameI__70DDC3D8");
+
+                entity.HasOne(d => d.Osystem)
+                    .WithMany(p => p.GameOsystems)
+                    .HasForeignKey(d => d.OsystemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__GameOSyst__OSyst__71D1E811");
             });
 
             modelBuilder.Entity<Osystem>(entity =>

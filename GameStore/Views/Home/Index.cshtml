@@ -17,7 +17,7 @@
 	<h2 class="mt-2 mb-4 text-center">
 		Discover Games
 	</h2>
-
+	
 	<div class="row mt-2">
 		@foreach (var item in Model)
 		{
@@ -28,8 +28,8 @@
 						<img src="@item.GameCoverImagePath" class="card-img-top img-fluid rounded">
 
 						<div class="card-body">
-							<h5 class="card-title text-center">@item.GameName</h5>
-							<p class="card-subtitle">@item.GamePrice.ToString("0.00")$</p>
+							<h4 class="card-title text-center">@item.GameName</h4>
+							<h5 class="card-subtitle text-center">@item.GamePrice.ToString("0.00")$</h5>
 							<p class="card-text">@item.GameDescription</p>
 						</div>
 					</a>
