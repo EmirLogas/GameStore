@@ -187,6 +187,12 @@ namespace GameStore.Controllers
                     db.UserGames.Remove(userGame);
                 }
 
+                IQueryable<GameOsystem> gameOsystems = db.GameOsystems.Where(x => x.GameId == id);
+                foreach (GameOsystem gameOsystem in gameOsystems)
+                {
+                    db.GameOsystems.Remove(gameOsystem);
+                }
+
                 db.Games.Remove(game);
                 db.SaveChanges();
                 return "success";
