@@ -31,6 +31,7 @@
 					<th scope="col">Game Name</th>
 					<th scope="col">Price</th>
 					<th scope="col">Category</th>
+					<th scope="col">Sale Count</th>
 					<th scope="col">Actions</th>
 				</tr>
 			</thead>
@@ -48,6 +49,7 @@
 					<td>@item.GameName</td>
 					<td>@item.GamePrice.ToString("0.00")$</td>
 					<td>@item.GameCategory.CategoryName</td>
+					<td>@ViewBag.gameSaleCountVB[(tCounter-2)]</td>
 					<td>
 						<a type="button" class="btn btn-info editGameBtn" href="/EditGame/@item.GameId">
 							Edit

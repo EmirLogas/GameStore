@@ -15,6 +15,13 @@ namespace GameStore.Controllers
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
             List<Game> games = db.Games.Where(x => x.UserId == user.UserId).ToList();
             ViewBag.Categories = db.Categories.ToList();
+            List<int> gameSaleCount = new List<int>();
+            // Game sale count
+            for (int i = 0; i < games.Count; i++)
+            {
+                gameSaleCount.Add(db.UserGames.Where(x => x.GameId == games[i].GameId).Count());
+            }
+            ViewBag.gameSaleCountVB = gameSaleCount;
             return View(games);
         }
 

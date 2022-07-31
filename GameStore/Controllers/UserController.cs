@@ -86,6 +86,14 @@ namespace GameStore.Controllers
 
                 if (user.UserTypeId == 1)
                 {
+                    // Total games sold count
+                    int soldGameCount = db.UserGames.Count();
+                    ViewBag.soldGameCount = soldGameCount;
+
+                    // Total revenue from games sold
+                    decimal soldGameRevenue = db.UserGames.Sum(x => x.Game.GamePrice);
+                    ViewBag.soldGameRevenue = soldGameRevenue;
+
                     return RedirectToAction("AdminIndex");
                 }
                 else

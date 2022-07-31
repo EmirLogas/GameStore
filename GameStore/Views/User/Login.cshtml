@@ -17,25 +17,20 @@
 
 						<div class="mb-md-5 mt-md-4">
 							<form asp-action="Login" method="post">
-								
-							
+								<h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+								<p class="text-white-50 mb-5">Please enter your Email and Password!</p>
 
-							<h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-							<p class="text-white-50 mb-5">Please enter your Email and Password!</p>
+								<div class="form-outline form-white mb-4">
+									<input type="email" id="typeEmailX" class="form-control form-control-lg" name="UserEmail" />
+									<label class="form-label" for="typeEmailX">Email</label>
+								</div>
 
-							<div class="form-outline form-white mb-4">
-								<input type="email" id="typeEmailX" class="form-control form-control-lg" name="UserEmail"/>
-								<label class="form-label" for="typeEmailX">Email</label>
-							</div>
+								<div class="form-outline form-white mb-2">
+									<input type="password" id="typePasswordX" class="form-control form-control-lg" name="UserPassword" />
+									<label class="form-label" for="typePasswordX">Password</label>
+								</div>
 
-							<div class="form-outline form-white mb-2">
-								<input type="password" id="typePasswordX" class="form-control form-control-lg" name="UserPassword"/>
-								<label class="form-label" for="typePasswordX">Password</label>
-							</div>
-
-							<p class="small mb-3 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-
-							<button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+								<button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
 							</form>
 						</div>
 
