@@ -21,8 +21,8 @@ namespace GameStore.Controllers
         [HttpPost]
         public IActionResult Register(User u)
         {
-            u.UserName = "example";
-            u.UserTypeId = 1;
+            u.UserName = u.UserEmail.Split('@')[0];
+            u.UserTypeId = 2;
             db.Users.Add(u);
             db.SaveChanges();
             return RedirectToAction("Index");
