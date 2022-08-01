@@ -11,6 +11,12 @@
 			max-width: 800px !important;
 			max-height: 450px !important;
 		}
+
+		.carousel-item img {
+			max-width: 800px !important;
+			max-height: 450px !important;
+			object-fit: cover;
+		}
 	</style>
 }
 
@@ -76,6 +82,65 @@
 					}
 				}
 			</div>
+		</div>
+	</div>
+	<div>
+		<div>
+			@{
+				bool w = false;
+				bool l = false;
+				bool m = false;
+			}
+			@foreach (var item in ViewBag.osystems)
+			{
+				if (item.OsystemName == "Windows")
+				{
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows" checked disabled>
+						<label class="form-check-label" for="inlineCheckbox2">Windows</label>
+					</div>
+					w = true;
+
+				}
+				if (item.OsystemName == "Linux")
+				{
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux" checked disabled>
+						<label class="form-check-label" for="inlineCheckbox2">Linux</label>
+					</div>
+					l = true;
+				}
+				if (item.OsystemName == "MacOS")
+				{
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS" checked disabled>
+						<label class="form-check-label" for="inlineCheckbox2">MacOS</label>
+					</div>
+					m = true;
+				}
+			}
+			@if (w == false)
+			{
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows" disabled>
+					<label class="form-check-label" for="inlineCheckbox2">Windows</label>
+				</div>
+			}
+			@if (l == false)
+			{
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux" disabled>
+					<label class="form-check-label" for="inlineCheckbox2">Linux</label>
+				</div>
+			}
+
+			@if (m == false)
+			{
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS" disabled>
+					<label class="form-check-label" for="inlineCheckbox2">MacOS</label>
+				</div>
+			}
 		</div>
 	</div>
 

@@ -57,7 +57,7 @@ namespace GameStore.Controllers
                 db.GameOsystems.Add(gameOsystem);
             }
 
-            if (MacOS == "Macos")
+            if (MacOS == "MacOS")
             {
                 GameOsystem gameOsystem = new GameOsystem();
                 gameOsystem.GameId = game.GameId;
@@ -105,16 +105,22 @@ namespace GameStore.Controllers
         {
             Game game = db.Games.First(x => x.GameId == id);
             ViewBag.Categories = db.Categories.ToList();
+            List<GameOsystem> gameOsystems = db.GameOsystems.Where(x => x.GameId == id).ToList();
+            List<Osystem> osystems = new List<Osystem>();
+            foreach (var gameOsystem in gameOsystems)
+            {
+                osystems.Add(db.Osystems.First(x => x.OsystemId == gameOsystem.OsystemId));
+            }
+            ViewBag.osystems = osystems;
             return View(game);
         }
 
         [Authorize(Policy = "UserOnly")]
-        public IActionResult UpdateGame(Game game/*, IFormFile formFile, List<IFormFile> formFiles*/)
+        public IActionResult UpdateGame(Game game, String Windows, String Linux, String MacOS /*, IFormFile formFile, List<IFormFile> formFiles*/)
         {
             Game entity = db.Games.First(x => x.GameId == game.GameId);
             if (entity != null)
             {
-
                 entity.GameName = game.GameName;
                 entity.GamePrice = game.GamePrice;
                 entity.GameDescription = game.GameDescription;
@@ -122,6 +128,42 @@ namespace GameStore.Controllers
                 entity.GameDeveloper = game.GameDeveloper;
                 entity.GameCategoryId = game.GameCategoryId;
             }
+            if (Windows == "Windows")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 1;
+                GameOsystem exist = db.GameOsystems.FirstOrDefault(x => x.GameId == game.GameId && x.OsystemId == 1);
+                if (exist == null)
+                {
+                    db.GameOsystems.Add(gameOsystem);
+                }
+            }
+
+            if (Linux == "Linux")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 2;
+                GameOsystem exist = db.GameOsystems.FirstOrDefault(x => x.GameId == game.GameId && x.OsystemId == 2);
+                if (exist == null)
+                {
+                    db.GameOsystems.Add(gameOsystem);
+                }
+            }
+
+            if (MacOS == "MacOS")
+            {
+                GameOsystem gameOsystem = new GameOsystem();
+                gameOsystem.GameId = game.GameId;
+                gameOsystem.OsystemId = 3;
+                GameOsystem exist = db.GameOsystems.FirstOrDefault(x => x.GameId == game.GameId && x.OsystemId == 3);
+                if (exist == null)
+                {
+                    db.GameOsystems.Add(gameOsystem);
+                }
+            }
+
             db.SaveChanges();
             return RedirectToAction("ListReleased");
         }
@@ -143,6 +185,15 @@ namespace GameStore.Controllers
             {
                 commentsUsers.Add(db.Users.First(x => x.UserId == comment.UserId));
             }
+
+            List<GameOsystem> gameOsystems = db.GameOsystems.Where(x => x.GameId == id).ToList();
+            List<Osystem> osystems = new List<Osystem>();
+            foreach (var gameOsystem in gameOsystems)
+            {
+                osystems.Add(db.Osystems.First(x => x.OsystemId == gameOsystem.OsystemId));
+            }
+            ViewBag.osystems = osystems;
+
             ViewBag.commentsUsers = commentsUsers;
             ViewBag.comments = comments;
             ViewBag.ContentImages = contentImages;
