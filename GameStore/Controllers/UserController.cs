@@ -119,6 +119,7 @@ namespace GameStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Friends(int id)
         {
             List<FriendUser> friends = db.FriendUsers.Where(x => x.UserId1 == id || x.UserId2 == id).ToList();
@@ -159,6 +160,7 @@ namespace GameStore.Controllers
             ViewBag.UsersFriendsCounts = UsersFriendsCounts;
             return View(users);
         }
+        [Authorize]
         public IActionResult AddFriend(string email)
         {
             User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
