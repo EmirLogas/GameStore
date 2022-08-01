@@ -10,10 +10,6 @@ namespace GameStore.Controllers
     public class UserController : Controller
     {
         GameStoreDBContext db = new GameStoreDBContext();
-        public IActionResult Index()
-        {
-            return View();
-        }
         public IActionResult Register()
         {
             return View();
@@ -121,6 +117,58 @@ namespace GameStore.Controllers
             db.SaveChanges();
             _ = Login(u);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Friends(int id)
+        {
+            List<FriendUser> friends = db.FriendUsers.Where(x => x.UserId1 == id || x.UserId2 == id).ToList();
+            List<User> users = new List<User>();
+            foreach (FriendUser f in friends)
+            {
+                if (f.UserId1 == id)
+                {
+                    users.Add(db.Users.Where(x => x.UserId == f.UserId2).First());
+                }
+                else
+                {
+                    users.Add(db.Users.Where(x => x.UserId == f.UserId1).First());
+                }
+            }
+            List<int> UsersGamesCounts = new List<int>();
+            foreach (var item in users)
+            {
+                int tempcount = db.UserGames.Count(x => x.UserId == item.UserId);
+                UsersGamesCounts.Add(tempcount);
+            }
+            ViewBag.UsersGamesCounts = UsersGamesCounts;
+
+            List<int> UsersReleaseCounts = new List<int>();
+            foreach (var item in users)
+            {
+                int tempcount = db.Games.Count(x => x.UserId == item.UserId);
+                UsersReleaseCounts.Add(tempcount);
+            }
+            ViewBag.UsersReleaseCounts = UsersReleaseCounts;
+
+            List<int> UsersFriendsCounts = new List<int>();
+            foreach (var item in users)
+            {
+                int tempcount = db.FriendUsers.Count(x => x.UserId1 == item.UserId || x.UserId2 == item.UserId);
+                UsersFriendsCounts.Add(tempcount);
+            }
+            ViewBag.UsersFriendsCounts = UsersFriendsCounts;
+            return View(users);
+        }
+        public IActionResult AddFriend(string email)
+        {
+            User user = db.Users.First(x => x.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            User u = db.Users.Where(x => x.UserEmail == email).First();
+            FriendUser f = new FriendUser();
+            f.UserId1 = user.UserId;
+            f.UserId2 = u.UserId;
+            db.FriendUsers.Add(f);
+            db.SaveChanges();
+            return RedirectToAction("Friends", new { id = user.UserId });
         }
     }
 }

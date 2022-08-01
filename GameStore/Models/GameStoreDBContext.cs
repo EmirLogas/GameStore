@@ -19,6 +19,7 @@ namespace GameStore.Models
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<ContentImage> ContentImages { get; set; } = null!;
+        public virtual DbSet<FriendUser> FriendUsers { get; set; } = null!;
         public virtual DbSet<Game> Games { get; set; } = null!;
         public virtual DbSet<GameOsystem> GameOsystems { get; set; } = null!;
         public virtual DbSet<Osystem> Osystems { get; set; } = null!;
@@ -91,6 +92,33 @@ namespace GameStore.Models
                     .HasForeignKey(d => d.GameId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ContentIm__GameI__44FF419A");
+            });
+
+            modelBuilder.Entity<FriendUser>(entity =>
+            {
+                entity.HasKey(e => e.FriendUsersId)
+                    .HasName("PK__FriendUs__26F95F0E14AD79AA");
+
+                entity.HasIndex(e => new { e.UserId1, e.UserId2 }, "UQ__FriendUs__2847639453D2A0F3")
+                    .IsUnique();
+
+                entity.Property(e => e.FriendUsersId).HasColumnName("FriendUsersID");
+
+                entity.Property(e => e.UserId1).HasColumnName("UserID1");
+
+                entity.Property(e => e.UserId2).HasColumnName("UserID2");
+
+                entity.HasOne(d => d.UserId1Navigation)
+                    .WithMany(p => p.FriendUserUserId1Navigations)
+                    .HasForeignKey(d => d.UserId1)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__FriendUse__UserI__03F0984C");
+
+                entity.HasOne(d => d.UserId2Navigation)
+                    .WithMany(p => p.FriendUserUserId2Navigations)
+                    .HasForeignKey(d => d.UserId2)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__FriendUse__UserI__04E4BC85");
             });
 
             modelBuilder.Entity<Game>(entity =>
@@ -226,40 +254,6 @@ namespace GameStore.Models
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
-
-                entity.HasMany(d => d.UserId1s)
-                    .WithMany(p => p.UserId2s)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "FriendUser",
-                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3B75D760"),
-                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3C69FB99"),
-                        j =>
-                        {
-                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__28476395FA18C71D");
-
-                            j.ToTable("FriendUsers");
-
-                            j.IndexerProperty<int>("UserId1").HasColumnName("UserID1");
-
-                            j.IndexerProperty<int>("UserId2").HasColumnName("UserID2");
-                        });
-
-                entity.HasMany(d => d.UserId2s)
-                    .WithMany(p => p.UserId1s)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "FriendUser",
-                        l => l.HasOne<User>().WithMany().HasForeignKey("UserId2").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3C69FB99"),
-                        r => r.HasOne<User>().WithMany().HasForeignKey("UserId1").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__FriendUse__UserI__3B75D760"),
-                        j =>
-                        {
-                            j.HasKey("UserId1", "UserId2").HasName("PK__FriendUs__28476395FA18C71D");
-
-                            j.ToTable("FriendUsers");
-
-                            j.IndexerProperty<int>("UserId1").HasColumnName("UserID1");
-
-                            j.IndexerProperty<int>("UserId2").HasColumnName("UserID2");
-                        });
             });
 
             modelBuilder.Entity<UserGame>(entity =>

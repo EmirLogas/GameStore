@@ -8,10 +8,10 @@ namespace GameStore.Models
         public User()
         {
             Comments = new HashSet<Comment>();
+            FriendUserUserId1Navigations = new HashSet<FriendUser>();
+            FriendUserUserId2Navigations = new HashSet<FriendUser>();
             Games = new HashSet<Game>();
             UserGames = new HashSet<UserGame>();
-            UserId1s = new HashSet<User>();
-            UserId2s = new HashSet<User>();
         }
 
         public int UserId { get; set; }
@@ -22,10 +22,9 @@ namespace GameStore.Models
         public DateTime? UserRegisterDate { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<FriendUser> FriendUserUserId1Navigations { get; set; }
+        public virtual ICollection<FriendUser> FriendUserUserId2Navigations { get; set; }
         public virtual ICollection<Game> Games { get; set; }
         public virtual ICollection<UserGame> UserGames { get; set; }
-
-        public virtual ICollection<User> UserId1s { get; set; }
-        public virtual ICollection<User> UserId2s { get; set; }
     }
 }

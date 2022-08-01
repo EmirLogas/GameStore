@@ -65,6 +65,11 @@
 							if (User.FindFirst(ClaimTypes.Name) != null)
 							{
 								string userID = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+								<li class="nav-item">
+									<a class="nav-link text-dark" href="/Friends/@userID">My Friends</a>
+								</li>
+
 								<li class="nav-item">
 									<a class="nav-link text-dark" href="/EditAccountPage/@userID">Account</a>
 								</li>

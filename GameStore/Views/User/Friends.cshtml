@@ -1,0 +1,47 @@
+﻿@using GameStore.Models
+@{
+	ViewData["Title"] = "Friends";
+}
+@model List<User>
+
+
+<div class="container">
+	<h2 class="mt-2 mb-4 text-center">
+		Add Friends
+	</h2>
+	<div class="form-floating mb-3">
+		<form method="post" asp-action="AddFriend">
+			<div class="row justify-content-center">
+				<div class="col-5">
+					<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+				</div>
+				<div class="col-1">
+					<button type="submit" class="btn btn-primary mb-3">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<h2 class="mt-2 mb-4 text-center">
+		Friends
+	</h2>
+	<div class="row mt-2">
+		@{
+			int counter = 0;
+		}
+		@foreach (var item in Model)
+		{
+			<div class="col-md-6 col-lg-4 mb-3">
+				<div class="card text-bg-primary mb-3" style="max-width: 18rem;">
+					<div class="card-header">@item.UserName</div>
+					<div class="card-body">
+						<p class="card-text">number of games purchased = @ViewBag.UsersGamesCounts[counter]</p>
+						<p class="card-text">number of games published = @ViewBag.UsersReleaseCounts[counter]</p>
+						<p class="card-text">Number of friends = @ViewBag.UsersFriendsCounts[counter]</p>
+					</div>
+				</div>
+			</div>
+			counter++;
+		}
+	</div>
+</div>
