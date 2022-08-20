@@ -1,3 +1,5 @@
+# Database Entity Relationship Diagram
+![GameStoreDB drawio](https://user-images.githubusercontent.com/76751818/185750244-5f07d756-25db-4093-9ef7-d3efd54d2b9e.svg)
 # HomePage
 ![image](https://user-images.githubusercontent.com/76751818/185744872-7756d255-bd4a-4ac8-91da-5da9fd68c11e.png)
 # Login Page
