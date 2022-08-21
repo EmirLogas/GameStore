@@ -103,19 +103,27 @@ namespace GameStore.Controllers
         [Authorize]
         public IActionResult EditAccountPage(int id)
         {
-            User u = db.Users.Where(x => x.UserId == id).First();
-            return View(u);
+            if (id.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                User u = db.Users.Where(x => x.UserId == id).First();
+                return View(u);
+            }
+            else
+                return RedirectToAction("Index");
         }
 
         [Authorize]
         public IActionResult EditAccount(User u)
         {
-            User entity = db.Users.Where(x => x.UserId == u.UserId).First();
-            entity.UserName = u.UserName;
-            entity.UserEmail = u.UserEmail;
-            entity.UserPassword = u.UserPassword;
-            db.SaveChanges();
-            _ = Login(u);
+            if (u.UserId.ToString() == User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                User entity = db.Users.Where(x => x.UserId == u.UserId).First();
+                entity.UserName = u.UserName;
+                entity.UserEmail = u.UserEmail;
+                entity.UserPassword = u.UserPassword;
+                db.SaveChanges();
+                _ = Login(u);
+            }
             return RedirectToAction("Index");
         }
 
