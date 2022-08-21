@@ -88,10 +88,9 @@ namespace GameStore.Controllers
         [Authorize(Policy = "UserOnly")]
         private void UploadFiles(List<IFormFile> formFiles, Game game)
         {
-            string filePath = "";
             foreach (var formFile in formFiles)
             {
-                filePath = UploadFile(formFile, game);
+                string filePath = UploadFile(formFile, game);
                 ContentImage contentImage = new ContentImage();
                 contentImage.GameId = game.GameId;
                 contentImage.ContentImagePath = filePath;

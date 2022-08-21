@@ -152,3 +152,7 @@ INSERT INTO UserTypes(UserTypeName) VALUES ('User');
 INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Admin', 'admin@hotmail.com', '123',1);
 INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Emir', 'emir@hotmail.com', '123', 2);
 INSERT INTO Users(UserName, UserEmail, UserPassword, UserTypeID) VALUES ('Emir2', 'emir2@hotmail.com', '123', 2);
+
+INSERT INTO OSystems(OSystemName) VALUES ('Windows');
+INSERT INTO OSystems(OSystemName) VALUES ('Linux');
+INSERT INTO OSystems(OSystemName) VALUES ('Mac');
