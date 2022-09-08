@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>@ViewData["Title"] - GameStore</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootst" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/GameStore.styles.css" asp-append-version="true" />
 	<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round"
 		  rel="stylesheet">
-	@await RenderSectionAsync("Styles", required: false)
+	<link href="~/css/layoutstyle.css" rel="stylesheet" />
+	@await RenderSectionAsync("HeadSection", required: false)
 </head>
 <body>
 	<header>
@@ -34,28 +34,26 @@
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
-						@{
-							// check Role
-							if (User.FindFirstValue("Role") == "1")
-							{
-								<a class="nav-link text-dark" asp-controller="Home" asp-action="AdminIndex">Home</a>
-							}
-							else
-							{
-								<a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-							}
-						}
 						<li class="nav-item">
-
+							@{
+								if (User.FindFirstValue("Role") == "1")
+								{
+									<a class="btn btn-outline-info nav-link text-dark" asp-controller="Home" asp-action="AdminIndex">Home Page</a>
+								}
+								else
+								{
+									<a class="btn btn-outline-success nav-link text-dark" asp-controller="Home" asp-action="Index">Home Page</a>
+								}
+							}
 						</li>
 						@{
 							if (User.FindFirst(ClaimTypes.Name) != null && User.FindFirstValue("Role") == "2")
 							{
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="ListLibrary">My Library</a>
+									<a class="btn btn-outline-primary nav-link text-dark" asp-action="ListLibrary">My Library</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="ListReleased">Released Games</a>
+									<a id="a_ReleasedGames" class="btn btn-outline-light nav-link text-dark" asp-action="ListReleased">Released Games</a>
 								</li>
 							}
 						}
@@ -67,23 +65,23 @@
 								string userID = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 								<li class="nav-item">
-									<a class="nav-link text-dark" href="/Friends/@userID">My Friends</a>
+									<a class="btn btn-outline-secondary nav-link text-dark" href="/Friends/@userID">My Friends</a>
 								</li>
 
 								<li class="nav-item">
-									<a class="nav-link text-dark" href="/EditAccountPage/@userID">Account</a>
+									<a class="btn btn-outline-warning nav-link text-dark" href="/EditAccountPage/@userID">Account</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="Logout">Logout</a>
+									<a class="btn btn-outline-danger nav-link text-dark" asp-action="Logout">Logout</a>
 								</li>
 							}
 							else
 							{
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="Login">Login</a>
+									<a class="btn btn-outline-primary nav-link text-dark" asp-action="Login">Login</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link text-dark" asp-action="Register">Register</a>
+									<a id="a_register" class="btn btn-outline-success nav-link text-dark" asp-action="Register">Register</a>
 								</li>
 							}
 						}
@@ -104,9 +102,7 @@
 	</footer>
 
 	@await RenderSectionAsync("Body", required: false)
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

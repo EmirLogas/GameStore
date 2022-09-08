@@ -1,0 +1,30 @@
+﻿
+@import "bootstrap";
+
+@media all and (min-width: 576px) {
+    .navbar-collapse {
+        margin-left: 20px;
+    }
+
+    #a_register {
+        margin-left: 15px;
+    }
+
+    li {
+        margin: 5px;
+    }
+}
+
+@media all and (max-width: 576px) {
+    li {
+        margin-bottom: 5px;
+    }
+}
+
+.navbar-brand {
+    font-size: 30px;
+}
+
+.btn-outline-light {
+    color: #83c5be
+}

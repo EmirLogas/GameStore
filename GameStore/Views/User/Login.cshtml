@@ -1,4 +1,4 @@
-﻿@section Styles{
+﻿@section HeadSection{
 	<style>
 		body {
 			background: #6a11cb;
@@ -29,18 +29,22 @@
 									<input type="password" id="typePasswordX" class="form-control form-control-lg" name="UserPassword" />
 									<label class="form-label" for="typePasswordX">Password</label>
 								</div>
+							@if (ViewBag.LgError != null)
+							{
+								<p style="color:red">@ViewBag.LgError</p>
+							}
 
-								<button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-							</form>
-						</div>
+							<button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+						</form>
+					</div>
 
-						<div>
-							<p>
-								Don't have an account? <a asp-action="Register" class="text-white-50 fw-bold">Sign Up</a>
-							</p>
-						</div>
+					<div>
+						<p>
+							Don't have an account? <a asp-action="Register" class="text-white-50 fw-bold">Sign Up</a>
+						</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>

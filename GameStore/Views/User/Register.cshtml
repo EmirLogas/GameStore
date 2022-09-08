@@ -1,4 +1,4 @@
-﻿@section Styles{
+﻿@section HeadSection{
 	<style>
 		body {
 			background: #6a11cb;
@@ -22,11 +22,11 @@
 								<p class="text-white-50 mb-5">Please enter your Email and Password!</p>
 
 								<div class="form-outline form-white mb-4">
-									<input type="email" id="typeEmailX" class="form-control form-control-lg" name="UserEmail"/>
+									<input type="email" id="typeEmailX" class="form-control form-control-lg" name="UserEmail" />
 									<label class="form-label" for="typeEmailX">Email</label>
 								</div>
 
-								<div class="form-outline form-white mb-4">
+								<div class="form-outline form-white mb-2">
 									<input type="password" id="typePasswordX" class="form-control form-control-lg" name="UserPassword" />
 									<label class="form-label" for="typePasswordX">Password</label>
 								</div>
@@ -36,7 +36,7 @@
 						</div>
 
 						<div>
-							<p class="mb-0">
+							<p>
 								Do you have an account? <a asp-action="Login" class="text-white-50 fw-bold">Login</a>
 							</p>
 						</div>

@@ -33,7 +33,17 @@ namespace GameStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(User u)
         {
-            User user = db.Users.First(x => x.UserEmail == u.UserEmail && x.UserPassword == u.UserPassword);
+            User user;
+            try
+            {
+                user = db.Users.First(x => x.UserEmail == u.UserEmail && x.UserPassword == u.UserPassword);
+            }
+            catch (Exception)
+            {
+                ViewBag.LgError = "Kullanıcı adı veya parola hatalı";
+                return View();
+            }
+
             if (user == null)
             {
                 return View();

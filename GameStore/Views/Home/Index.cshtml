@@ -3,14 +3,16 @@
 	ViewData["Title"] = "Discover Games";
 }
 @model List<Game>
-
+@section HeadSection{
+	<link href="~/css/indexstyle.css" rel="stylesheet" />
+}
 
 <div class="container">
 
 	@if (@ViewBag.UserName != null)
 	{
 		<h2 class="text-center mt-2">
-			Welcome @ViewBag.UserName
+			Welcome <span id="span_UserName">@ViewBag.UserName</span>
 		</h2>
 	}
 
@@ -37,5 +39,4 @@
 			</div>
 		}
 	</div>
-
 </div>
