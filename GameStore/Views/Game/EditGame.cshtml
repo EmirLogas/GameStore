@@ -3,6 +3,9 @@
 	ViewData["Title"] = "Edit Game";
 }
 @model Game
+@section Scripts{
+	<script src="~/js/editgamescript.js"></script>
+}
 
 <div class="container">
 	<form class="row g-3 needs-validation mt-3" method="post" asp-action="UpdateGame" enctype="multipart/form-data" novalidate>
@@ -19,6 +22,25 @@
 			<input type="text" class="form-control" id="PriceValidation" name="GamePrice" value="@Model.GamePrice" required>
 			<div class="invalid-feedback">
 				Please provide a valid Price.
+			</div>
+		</div>
+		<div class="col-md-4">
+			<label for="CategoryValidation" class="form-label">Category</label>
+			<select class="form-select" id="CategoryValidation" name="GameCategoryID" required>
+				@foreach (var item in ViewBag.Categories)
+				{
+					@if (Model.GameCategoryId == item.CategoryId)
+					{
+						<option value="@item.CategoryId" selected>@item.CategoryName</option>
+					}
+					else
+					{
+						<option value="@item.CategoryId">@item.CategoryName</option>
+					}
+				}
+			</select>
+			<div class="invalid-feedback">
+				Please select a valid Category.
 			</div>
 		</div>
 		<div class="input-group col-md-8">
@@ -40,83 +62,65 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<label for="CategoryValidation" class="form-label">Category</label>
-			<select class="form-select" id="CategoryValidation" name="GameCategoryID" required>
-				@foreach (var item in ViewBag.Categories)
-				{
-					@if (Model.GameCategoryId == item.CategoryId)
-					{
-						<option value="@item.CategoryId" selected>@item.CategoryName</option>
-					}
-					else
-					{
-						<option value="@item.CategoryId">@item.CategoryName</option>
-					}
-
-
-				}
-			</select>
-			<div class="invalid-feedback">
-				Please select a valid Category.
-			</div>
-		</div>
-		<div>
 			<div>
+				<label for="inlineCheckbox1" class="form-label">Supported operating systems</label>
 				@{
 					bool w = false;
 					bool l = false;
 					bool m = false;
 				}
-				@foreach (var item in ViewBag.osystems)
-				{
-					if (item.OsystemName == "Windows")
+				<div>
+					@foreach (var item in ViewBag.osystems)
+					{
+						if (item.OsystemName == "Windows")
+						{
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows" checked>
+								<label class="form-check-label" for="inlineCheckbox2">Windows</label>
+							</div>
+							w = true;
+
+						}
+						if (item.OsystemName == "Linux")
+						{
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux" checked>
+								<label class="form-check-label" for="inlineCheckbox2">Linux</label>
+							</div>
+							l = true;
+						}
+						if (item.OsystemName == "MacOS")
+						{
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS" checked>
+								<label class="form-check-label" for="inlineCheckbox2">MacOS</label>
+							</div>
+							m = true;
+						}
+					}
+					@if (w == false)
 					{
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows" checked>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows">
 							<label class="form-check-label" for="inlineCheckbox2">Windows</label>
 						</div>
-						w = true;
-
 					}
-					if (item.OsystemName == "Linux")
+					@if (l == false)
 					{
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux" checked>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux">
 							<label class="form-check-label" for="inlineCheckbox2">Linux</label>
 						</div>
-						l = true;
 					}
-					if (item.OsystemName == "MacOS")
+
+					@if (m == false)
 					{
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS" checked>
+							<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS">
 							<label class="form-check-label" for="inlineCheckbox2">MacOS</label>
 						</div>
-						m = true;
 					}
-				}
-				@if (w == false)
-				{
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Windows" name="Windows">
-						<label class="form-check-label" for="inlineCheckbox2">Windows</label>
-					</div>
-				}
-				@if (l == false)
-				{
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Linux" name="Linux">
-						<label class="form-check-label" for="inlineCheckbox2">Linux</label>
-					</div>
-				}
-
-				@if (m == false)
-				{
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="MacOS" name="MacOS">
-						<label class="form-check-label" for="inlineCheckbox2">MacOS</label>
-					</div>
-				}
+				</div>
 			</div>
 		</div>
 
