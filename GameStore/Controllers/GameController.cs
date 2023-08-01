@@ -40,31 +40,20 @@ namespace GameStore.Controllers
             game.GameCoverImagePath = UploadFile(formFile, game);
             db.Games.Add(game);
             db.SaveChanges();
-
+            
+            GameOsystem gameOsystem = new GameOsystem();
+            gameOsystem.GameId = game.GameId;
+            
             if (Windows == "Windows")
-            {
-                GameOsystem gameOsystem = new GameOsystem();
-                gameOsystem.GameId = game.GameId;
                 gameOsystem.OsystemId = 1;
-                db.GameOsystems.Add(gameOsystem);
-            }
 
             if (Linux == "Linux")
-            {
-                GameOsystem gameOsystem = new GameOsystem();
-                gameOsystem.GameId = game.GameId;
                 gameOsystem.OsystemId = 2;
-                db.GameOsystems.Add(gameOsystem);
-            }
 
             if (MacOS == "MacOS")
-            {
-                GameOsystem gameOsystem = new GameOsystem();
-                gameOsystem.GameId = game.GameId;
                 gameOsystem.OsystemId = 3;
-                db.GameOsystems.Add(gameOsystem);
-            }
 
+            db.GameOsystems.Add(gameOsystem);
             db.SaveChanges();
 
             UploadFiles(formFiles, game);
